@@ -24,22 +24,28 @@ cd backend
 - Para Criar o banco de dados execute o seguinte comando
 
 ```bash
-psql -U postgres -d ecommerce -f db/tables.sql
+psql -U postgres -f db/tables.sql
 ```
 
-- Para verificar se o banco existe execute o seguinte comando
+- o psql é uma ferramenta que permite a verificação dos bancos de dados
+
+- Para se conectar ao bando criado anteriormente
 
 ```bash
-psql -U postgres
+psql -U postgres -d ecommerce
 ```
 
-- Digite a senha do Postgres e em seguida execute
+- Listar bancos existente
 
 ```bash
 \l
 ```
 
-- Você verá a lista de banco de dados existentes
+- Listar tabelas do banco conectado atualmente
+
+```bash
+\dt
+```
 
 ## Deletar o Banco de dados
 
@@ -56,3 +62,10 @@ Em seguida você deve rodar a query que deleta o banco
 ```bash
 psql -U postgres -f db/delete-db.sql
 ```
+
+## Inicializar o projeto
+
+- Requisitos
+
+  - Node: 18.18.2
+  - Extensão Live Server para o VSCode
