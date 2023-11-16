@@ -30,7 +30,6 @@ SELECT * FROM login
 ## Inicializar o projeto
 
 - Requisitos
-
   - Node: 18.18.2
   - Extensão Live Server para o VSCode
 
@@ -43,3 +42,12 @@ SELECT * FROM login
 - Frontend
   - Entrar no arquivo `index.html`
   - Clicar no botão Go Live
+
+## Explicação das bibliotecas fundamentais utilizadas
+
+- express
+    - Permite a criação do servidor e configuração das rotas da API
+
+- pg
+    - Realiza uma conexão com um bando de dados PostgreSQL
+    - Fornece uma API para execução de queries SQL no banco conectado
