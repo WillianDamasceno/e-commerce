@@ -1,12 +1,3 @@
-CREATE DATABASE ecommerce;
-
-CREATE TABLE login (
-    usuario VARCHAR(255) PRIMARY KEY,
-    senha VARCHAR(255),
-    codigo_cliente INT,
-    FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente)
-);
-
 CREATE TABLE cliente (
     codigo_cliente INT PRIMARY KEY,
     nome VARCHAR(255),
@@ -17,6 +8,13 @@ CREATE TABLE cliente (
     cidade VARCHAR(255),
     uf VARCHAR(2),
     cep VARCHAR(10)
+);
+
+CREATE TABLE login (
+    usuario VARCHAR(255) PRIMARY KEY,
+    senha VARCHAR(255),
+    codigo_cliente INT,
+    FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente)
 );
 
 CREATE TABLE produtos (
