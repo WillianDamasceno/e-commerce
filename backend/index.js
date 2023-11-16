@@ -28,6 +28,30 @@ app.get("/", async (request, response, next) => {
   });
 });
 
+app.post("/login", async () => {});
+app.post("/registro", async () => {});
+
+app.get("/clientes", async () => {});
+app.get("/cliente/:id", async () => {});
+app.post("/cliente/:id", async () => {});
+app.patch("/cliente/:id", async () => {});
+app.delete("/cliente/:id", async () => {});
+
+app.get("/produtos", async () => {});
+app.get("/produto/:id", async () => {});
+app.post("/produto/:id", async () => {});
+app.patch("/produto/:id", async () => {});
+app.delete("/produto/:id", async () => {});
+
+app.get("/pedido/:id", async () => {});
+app.post("/pedido/:id", async () => {});
+app.patch("/pedido/:id", async () => {});
+app.delete("/pedido/:id", async () => {});
+
+app.get("/item-pedido/:id", async () => {});
+app.post("/item-pedido/:id", async () => {});
+app.patch("/item-pedido/:id", async () => {});
+app.delete("/item-pedido/:id", async () => {});
 
 app.listen(process.env.PORT, () => {
   console.log("App rodando no link http://localhost:3000");
