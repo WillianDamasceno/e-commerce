@@ -10,10 +10,14 @@ import { client } from "./db/client.js";
 // Configuração inicial
 const app = express();
 
+// Permite enviar dados no body da requisição POST
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Configura o cors
 app.use(cors());
 
+// Criar uma conexão com o bando de dados
 await client.connect();
 
 // Rotas
@@ -29,7 +33,6 @@ app.get("/", async (request, response, next) => {
   });
 });
 
-app.post("/login", async () => {});
 app.post("/registro", async (req, res) => {
   const { body } = req;
 
@@ -39,7 +42,7 @@ app.post("/registro", async (req, res) => {
   );
 
   if (usuarioQuery.rowCount) {
-    return res.sendStatus(403).send("Usuário já existente");
+    return res.status(403).json({ mensagem: "Usuário já existente" });
   }
 
   try {
@@ -59,9 +62,10 @@ app.post("/registro", async (req, res) => {
   } catch (e) {
     console.log(e);
 
+    await client.end();
     return res
-      .sendStatus(400)
-      .send("Algo deu errado ao tentar cadastrar o usuário");
+      .status(400)
+      .json({ mensagem: "Algo deu errado ao tentar cadastrar o usuário" });
   }
 
   const codigoUltimoClienteQuery = await client.query(
@@ -77,12 +81,62 @@ app.post("/registro", async (req, res) => {
   } catch (e) {
     console.log(e);
 
+    await client.end();
     return res
-      .sendStatus(400)
-      .send("Algo deu errado ao tentar cadastrar o usuário");
+      .status(400)
+      .json({ mensagem: "Algo deu errado ao tentar cadastrar o usuário" });
   }
 
-  return res.sendStatus(200);
+  await client.end();
+  return res.status(200);
+});
+
+app.post("/login", async (req, res) => {
+  const { body } = req;
+
+  let loginQuery;
+  try {
+    loginQuery = await client.query(
+      "SELECT * FROM login WHERE usuario = $1 AND senha = $2",
+      [body["usuario"], body["senha"]]
+    );
+  } catch (e) {
+    console.log(e);
+
+    await client.end();
+    res
+      .status(400)
+      .json({ mensagem: "Algo deu errado ao tentar realizar o login" });
+  }
+
+  if (!loginQuery.rowCount) {
+    await client.end();
+    return res
+      .status(400)
+      .json({ mensagem: "Os dados de login estão incorretos" });
+  }
+
+  const login = loginQuery.rows[0];
+
+  try {
+    const clienteQuery = await client.query(
+      "SELECT * FROM cliente WHERE codigo_cliente = $1",
+      [login.codigo_cliente]
+    );
+
+    await client.end();
+    return res.status(200).json({
+      cliente: clienteQuery.rows[0],
+      login,
+    });
+  } catch (e) {
+    console.log(e);
+
+    await client.end();
+    return res
+      .status(400)
+      .json({ mensagem: "Algo deu errado ao tentar realizar o login" });
+  }
 });
 
 app.get("/clientes", async () => {});
