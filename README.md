@@ -33,3 +33,13 @@ SELECT * FROM login
 
   - Node: 18.18.2
   - Extensão Live Server para o VSCode
+
+- Backend:
+
+  - `cd backend`
+  - `npm start`
+  - Pressionar Ctrl Click no link que aparecer no console
+
+- Frontend
+  - Entrar no arquivo `index.html`
+  - Clicar no botão Go Live
