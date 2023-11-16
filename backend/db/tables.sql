@@ -1,5 +1,5 @@
 CREATE TABLE cliente (
-    codigo_cliente INT PRIMARY KEY,
+    codigo_cliente SERIAL PRIMARY KEY,
     nome VARCHAR(255),
     rua VARCHAR(255),
     numero VARCHAR(50),
@@ -18,14 +18,14 @@ CREATE TABLE login (
 );
 
 CREATE TABLE produtos (
-    codigo_produto INT PRIMARY KEY,
+    codigo_produto SERIAL PRIMARY KEY,
     descricao VARCHAR(255),
     preco DECIMAL(10, 2),
     imagem TEXT
 );
 
 CREATE TABLE pedidos (
-    codigo_pedido INT PRIMARY KEY,
+    codigo_pedido SERIAL PRIMARY KEY,
     codigo_cliente INT,
     total DECIMAL(10, 2),
     FOREIGN KEY (codigo_cliente) REFERENCES cliente(codigo_cliente)

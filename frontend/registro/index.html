@@ -1,11 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+      defer
+    ></script>
+
     <title>Document</title>
-</head>
-<body>
-    <h1>Registro</h1>
-</body>
+
+    <style>
+      main {
+        max-width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="mx-auto">
+      <h1 class="text-center">Registro</h1>
+
+      <form action="" method="get" class="d-flex flex-column">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome" />
+        <label for="usuario">Usuario</label>
+        <input type="text" name="usuario" id="usuario" />
+        <label for="senha">Senha</label>
+        <input type="text" name="senha" id="senha" />
+        <label for="rua">Rua</label>
+        <input type="text" name="rua" id="rua" />
+        <label for="numero">Numero</label>
+        <input type="text" name="numero" id="numero" />
+        <label for="complemento">Complemento</label>
+        <input type="text" name="complemento" id="complemento" />
+        <label for="bairro">Bairro</label>
+        <input type="text" name="bairro" id="bairro" />
+        <label for="cidade">Cidade</label>
+        <input type="text" name="cidade" id="cidade" />
+        <label for="uf">Uf</label>
+        <input type="text" name="uf" id="uf" />
+        <label for="cep">Cep</label>
+        <input type="text" name="cep" id="cep" />
+
+        <button type="submit">Registrar usuário</button>
+      </form>
+
+      <div></div>
+    </main>
+
+    <script type="module" defer>
+      const form = document.querySelector("form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const campos = {};
+
+        campos["nome"] = form["nome"].value;
+        campos["usuario"] = form["usuario"].value;
+        campos["senha"] = form["senha"].value;
+        campos["rua"] = form["rua"].value;
+        campos["numero"] = form["numero"].value;
+        campos["complemento"] = form["complemento"].value;
+        campos["bairro"] = form["bairro"].value;
+        campos["cidade"] = form["cidade"].value;
+        campos["uf"] = form["uf"].value;
+        campos["cep"] = form["cep"].value;
+
+        const res = await fetch("http://localhost:3000/registro", {
+          method: "POST",
+          body: JSON.stringify(campos),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (res.ok) {
+        }
+      });
+    </script>
+  </body>
 </html>
