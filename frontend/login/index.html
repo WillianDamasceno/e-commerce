@@ -47,8 +47,10 @@
         <label for="senha">Senha</label>
         <input type="text" name="senha" id="senha" />
 
-        <button>Login</button>
+        <button class="my-3">Login</button>
       </form>
+
+      <div class="erros alert-danger p-3 fw-bold d-none"></div>
     </main>
 
     <script type="module" defer>
@@ -70,8 +72,17 @@
           },
         });
 
+        const json = await res.json();
+
+        if (res.status !== 200) {
+          const errosDiv = document.querySelector(".erros");
+
+          errosDiv.textContent = json.mensagem;
+          errosDiv.classList.remove("d-none");
+        }
+
         if (res.ok) {
-          console.log(await res.json());
+          console.log(json);
         }
       });
     </script>

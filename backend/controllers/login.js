@@ -19,8 +19,8 @@ export const loginController = async (req, res) => {
 
   if (!loginQuery.rowCount) {
     return res
-      .status(400)
-      .json({ mensagem: "Os dados de login estão incorretos" });
+      .status(401)
+      .json({ mensagem: "Os dados de login estão incorretos, verifique suas credenciais." });
   }
 
   const login = loginQuery.rows[0];

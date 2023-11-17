@@ -64,10 +64,10 @@
         <label for="cep">Cep</label>
         <input type="text" name="cep" id="cep" />
 
-        <button type="submit">Registrar usuário</button>
+        <button class="my-3">Registrar usuário</button>
       </form>
 
-      <div></div>
+      <div class="erros alert-danger p-3 fw-bold d-none"></div>
     </main>
 
     <script type="module" defer>
@@ -97,7 +97,17 @@
           },
         });
 
+        const json = await res.json();
+
+        if (res.status !== 200) {
+          const errosDiv = document.querySelector(".erros");
+
+          errosDiv.textContent = json.mensagem;
+          errosDiv.classList.remove("d-none");
+        }
+
         if (res.ok) {
+          console.log(json);
         }
       });
     </script>

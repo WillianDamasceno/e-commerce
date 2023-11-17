@@ -9,7 +9,11 @@ export const login = async (req, res) => {
   );
 
   if (usuarioQuery.rowCount) {
-    return res.status(403).json({ mensagem: "Usuário já existente" });
+    return res
+      .status(409)
+      .json({
+        mensagem: "Usuário já existente, escolha outro nome de usuário.",
+      });
   }
 
   try {
