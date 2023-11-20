@@ -4,8 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Admin - Cadastro de produtos</h1>
+    <h1>Cadastro de produtos</h1>
+    <div>
+        <form action="">
+            <p>Nome do produto <input type="text" id="nome-produto" placeholder="Digite o nome do produto"></p>  
+            <p>Valor R$ <input type="number" id="valor" placeholder="Digite o valor do produto"></p>
+            <p>Descriçao:</p>
+            <textarea name="desc" id="desc" cols="30" rows="10" placeholder="Digite o descrição do produto"></textarea>
+            <p>Adicionar imagem <input id="imagem" type="text" placeholder="Digite a url da imagem"></p>
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
 </body>
 </html>
