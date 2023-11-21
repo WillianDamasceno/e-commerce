@@ -33,7 +33,15 @@
 
     <style>
       main {
+        margin-top: 130px;
         max-width: 400px;
+        padding: 15px;
+        border: 1px solid rgb(39, 215, 156);
+        background-color: rgb(37, 221, 160); 
+      }
+      .btn{
+        background-color: rgb(21, 125, 90); 
+        color: white;
       }
     </style>
   </head>
@@ -43,12 +51,12 @@
 
       <form class="d-flex flex-column">
         <label for="usuario">Usuário</label>
-        <input type="text" name="usuario" id="usuario" />
+        <input type="text" name="usuario" id="usuario" placeholder="Digite o usuario" />
         <label for="senha">Senha</label>
-        <input type="text" name="senha" id="senha" />
+        <input type="text" name="senha" id="senha" placeholder="Digite a senha"/>
 
-        <button class="my-3">Login</button>
-        <button class="my-3">Cadastrar</button>
+        <button class="my-3 btn">Login</button>
+        <button class="my-3 btn">Cadastrar</button>
       </form>
 
       <div class="erros alert-danger p-3 fw-bold d-none"></div>
