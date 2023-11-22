@@ -75,7 +75,7 @@
         const cliente = JSON.parse(localStorage.getItem("cliente"));
 
         if (cliente) {
-          window.location.href = "/frontend/produtos/index.html";
+          window.location.href = "/frontend/index.html";
         }
       } catch (e) {
         console.log(e);
@@ -118,8 +118,8 @@
 
         if (res.ok) {
           localStorage.setItem("cliente", JSON.stringify(json.cliente));
-          window.location.href = "/frontend/produtos/index.html";
-        }
+          window.location.href = "/frontend/index.html";
+        } 
       });
     </script>
   </body>
