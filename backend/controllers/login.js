@@ -6,7 +6,7 @@ export const loginController = async (req, res) => {
   let loginQuery;
   try {
     loginQuery = await client.query(
-      "SELECT * FROM login WHERE usuario = $1 AND senha = $2",
+      "SELECT * FROM login WHERE usuario = $1 AND senha = $2 LIMIT 1",
       [body["usuario"], body["senha"]]
     );
   } catch (e) {
