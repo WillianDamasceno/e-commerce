@@ -15,6 +15,12 @@ import {
   getTodosProdutos,
   updateProduto,
 } from "./controllers/produtos.js";
+import {
+  deleteCliente,
+  getCliente,
+  getTodosCliente,
+  updateCliente,
+} from "./controllers/clientes.js";
 
 // Configuração inicial
 const app = express();
@@ -43,11 +49,10 @@ app.get("/", async (req, res, next) => {
 app.post("/registro", registroController);
 app.post("/login", loginController);
 
-app.get("/clientes", async (req, res) => {});
-app.get("/cliente", async (req, res) => {});
-app.post("/cliente", async (req, res) => {});
-app.patch("/cliente", async (req, res) => {});
-app.delete("/cliente", async (req, res) => {});
+app.get("/clientes", getTodosCliente);
+app.get("/cliente/:codigo_cliente", getCliente);
+app.patch("/cliente", updateCliente);
+app.delete("/cliente", deleteCliente);
 
 app.get("/produtos", getTodosProdutos);
 app.get("/produto/:codigo_produto", getProduto);
