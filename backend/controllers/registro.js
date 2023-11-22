@@ -1,6 +1,6 @@
 import { client } from "../db/client.js";
 
-export const login = async (req, res) => {
+export const registroController = async (req, res) => {
   const { body } = req;
 
   const usuarioQuery = await client.query(
