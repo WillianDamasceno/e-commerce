@@ -38,10 +38,10 @@
         max-width: 400px;
         padding: 15px;
         border: 1px solid rgb(39, 215, 156);
-        background-color: rgb(37, 221, 160); 
+        background-color: rgb(37, 221, 160);
       }
-      .btn{
-        background-color: rgb(21, 125, 90); 
+      .btn {
+        background-color: rgb(21, 125, 90);
         color: white;
       }
     </style>
@@ -52,25 +52,85 @@
 
       <form class="d-flex flex-column">
         <label for="nome">Nome</label>
-        <input type="text" name="nome" id="nome" placeholder="Digite o nome completo" required/>
+        <input
+          type="text"
+          name="nome"
+          id="nome"
+          placeholder="Digite o nome completo"
+          required
+        />
         <label for="usuario">Usuário</label>
-        <input type="text" name="usuario" id="usuario" required placeholder="Digite o usuario" />
+        <input
+          type="text"
+          name="usuario"
+          id="usuario"
+          required
+          placeholder="Digite o usuario"
+        />
         <label for="senha">Senha</label>
-        <input type="text" name="senha" id="senha" required placeholder="Digite a senha"/>
+        <input
+          type="text"
+          name="senha"
+          id="senha"
+          required
+          placeholder="Digite a senha"
+        />
         <label for="rua">Rua</label>
-        <input type="text" name="rua" id="rua" required placeholder="Digite a rua"/>
+        <input
+          type="text"
+          name="rua"
+          id="rua"
+          required
+          placeholder="Digite a rua"
+        />
         <label for="numero">Numero</label>
-        <input type="text" name="numero" id="numero" required placeholder="Digite o numero"/>
+        <input
+          type="text"
+          name="numero"
+          id="numero"
+          required
+          placeholder="Digite o numero"
+        />
         <label for="complemento">Complemento</label>
-        <input type="text" name="complemento" id="complemento" required placeholder="Digite o complemento"/>
+        <input
+          type="text"
+          name="complemento"
+          id="complemento"
+          required
+          placeholder="Digite o complemento"
+        />
         <label for="bairro">Bairro</label>
-        <input type="text" name="bairro" id="bairro" required placeholder="Digite o bairro"/>
+        <input
+          type="text"
+          name="bairro"
+          id="bairro"
+          required
+          placeholder="Digite o bairro"
+        />
         <label for="cidade">Cidade</label>
-        <input type="text" name="cidade" id="cidade" required placeholder="Digite a cidade"/>
+        <input
+          type="text"
+          name="cidade"
+          id="cidade"
+          required
+          placeholder="Digite a cidade"
+        />
         <label for="uf">Uf</label>
-        <input type="text" name="uf" id="uf" required placeholder="Digite o estado-UF"/>
+        <input
+          type="text"
+          name="uf"
+          id="uf"
+          required
+          placeholder="Digite o estado-UF"
+        />
         <label for="cep">Cep</label>
-        <input type="text" name="cep" id="cep" required placeholder="Digite o Cep"/>
+        <input
+          type="text"
+          name="cep"
+          id="cep"
+          required
+          placeholder="Digite o Cep"
+        />
 
         <button class="my-3 btn">Registrar usuário</button>
         <a href="/frontend/login/index.html" class="btn my-3">Login</a>
@@ -80,7 +140,7 @@
     </main>
 
     <script type="module" defer>
-      redirecionaParaProdutosSeAutenticado()
+      redirecionaParaProdutosSeAutenticado();
 
       const form = document.querySelector("form");
 
@@ -123,5 +183,7 @@
         }
       });
     </script>
+
+    <script src="/frontend/src/js/main.js"></script>
   </body>
 </html>
