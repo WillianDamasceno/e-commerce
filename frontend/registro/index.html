@@ -65,6 +65,7 @@
         <input type="text" name="cep" id="cep" />
 
         <button class="my-3">Registrar usuário</button>
+        <a href="/frontend/login/index.html" class="btn btn-link my-3">Login</a>
       </form>
 
       <div class="erros alert-danger p-3 fw-bold d-none"></div>
@@ -119,7 +120,7 @@
         if (res.ok) {
           localStorage.setItem("cliente", JSON.stringify(json.cliente));
           window.location.href = "/frontend/index.html";
-        } 
+        }
       });
     </script>
   </body>
