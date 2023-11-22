@@ -9,11 +9,9 @@ export const registroController = async (req, res) => {
   );
 
   if (usuarioQuery.rowCount) {
-    return res
-      .status(409)
-      .json({
-        mensagem: "Usuário já existente, escolha outro nome de usuário.",
-      });
+    return res.status(409).json({
+      mensagem: "Usuário já existente, escolha outro nome de usuário.",
+    });
   }
 
   try {
@@ -38,16 +36,20 @@ export const registroController = async (req, res) => {
       .json({ mensagem: "Algo deu errado ao tentar cadastrar o usuário" });
   }
 
-  const codigoUltimoClienteQuery = await client.query(
-    "SELECT codigo_cliente FROM cliente ORDER BY codigo_cliente DESC LIMIT 1"
-  );
-  const codigoUltimoCliente = codigoUltimoClienteQuery.rows[0].codigo_cliente;
-
   try {
+    const codigoUltimoClienteQuery = await client.query(
+      "SELECT codigo_cliente FROM cliente ORDER BY codigo_cliente DESC LIMIT 1"
+    );
+    const codigoUltimoCliente = codigoUltimoClienteQuery.rows[0].codigo_cliente;
+
     await client.query(
       "INSERT INTO login (usuario, senha, codigo_cliente) VALUES ($1, $2, $3)",
       [body["usuario"], body["senha"], codigoUltimoCliente]
     );
+
+
+
+    return res.status(200).json({ mensagem: "Usuário registrado com sucesso" });
   } catch (e) {
     console.log(e);
 
@@ -55,6 +57,4 @@ export const registroController = async (req, res) => {
       .status(400)
       .json({ mensagem: "Algo deu errado ao tentar cadastrar o usuário" });
   }
-
-  return res.status(200);
 };
