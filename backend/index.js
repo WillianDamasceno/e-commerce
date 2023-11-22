@@ -8,6 +8,13 @@ import cors from "cors";
 import { client } from "./db/client.js";
 import { registroController } from "./controllers/registro.js";
 import { loginController } from "./controllers/login.js";
+import {
+  createProduto,
+  deleteProduto,
+  getProduto,
+  getTodosProdutos,
+  updateProduto,
+} from "./controllers/produtos.js";
 
 // Configuração inicial
 const app = express();
@@ -37,16 +44,16 @@ app.post("/registro", registroController);
 app.post("/login", loginController);
 
 app.get("/clientes", async (req, res) => {});
-app.get("/cliente/:id", async (req, res) => {});
-app.post("/cliente/:id", async (req, res) => {});
-app.patch("/cliente/:id", async (req, res) => {});
-app.delete("/cliente/:id", async (req, res) => {});
+app.get("/cliente", async (req, res) => {});
+app.post("/cliente", async (req, res) => {});
+app.patch("/cliente", async (req, res) => {});
+app.delete("/cliente", async (req, res) => {});
 
-app.get("/produtos", async (req, res) => {});
-app.get("/produto/:id", async (req, res) => {});
-app.post("/produto/:id", async (req, res) => {});
-app.patch("/produto/:id", async (req, res) => {});
-app.delete("/produto/:id", async (req, res) => {});
+app.get("/produtos", getTodosProdutos);
+app.get("/produto/:codigo_produto", getProduto);
+app.post("/produto", createProduto);
+app.patch("/produto", updateProduto);
+app.delete("/produto", deleteProduto);
 
 app.get("/pedido/:id", async (req, res) => {});
 app.post("/pedido/:id", async (req, res) => {});
