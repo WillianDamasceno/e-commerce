@@ -80,15 +80,7 @@
     </main>
 
     <script type="module" defer>
-      try {
-        const cliente = JSON.parse(localStorage.getItem("cliente"));
-
-        if (cliente) {
-          window.location.href = "/frontend/index.html";
-        }
-      } catch (e) {
-        console.log(e);
-      }
+      redirecionaParaProdutosSeAutenticado()
 
       const form = document.querySelector("form");
 
