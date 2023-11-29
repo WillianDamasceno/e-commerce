@@ -1,9 +1,9 @@
-import { client } from "../db/client.js";
+import { DB } from "../db/client.js";
 
 export const registroController = async (req, res) => {
   const { body } = req;
 
-  const usuarioQuery = await client.query(
+  const usuarioQuery = await DB.query(
     "SELECT * FROM login WHERE usuario = $1",
     [body["usuario"]]
   );
@@ -14,12 +14,12 @@ export const registroController = async (req, res) => {
     });
   }
 
-  const cliente = await client.query(
+  const cliente = await DB.query(
     `
-        INSERT INTO cliente (nome, rua, numero, complemento, bairro, cidade, uf, cep)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-        RETURNING *;
-      `,
+      INSERT INTO cliente (nome, rua, numero, complemento, bairro, cidade, uf, cep)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      RETURNING *;
+    `,
     [
       body["nome"],
       body["rua"],
@@ -32,7 +32,7 @@ export const registroController = async (req, res) => {
     ]
   );
 
-  await client.query(
+  await DB.query(
     `
         INSERT INTO login (usuario, senha, codigo_cliente)
         VALUES ($1, $2, $3)

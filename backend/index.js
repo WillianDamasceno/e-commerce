@@ -5,7 +5,7 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
-import { client } from "./db/client.js";
+import { DB } from "./db/client.js";
 import { registroController } from "./controllers/registro.js";
 import { loginController } from "./controllers/login.js";
 import {
@@ -33,12 +33,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Criar uma conexão com o bando de dados
-await client.connect();
+await DB.connect();
 
 // Rotas
 
 app.get("/", async (req, res, next) => {
-  const { rows } = await client.query("SELECT * FROM login");
+  const { rows } = await DB.query("SELECT * FROM login");
   console.log(rows);
 
   res.json({

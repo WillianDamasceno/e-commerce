@@ -1,7 +1,7 @@
-import { client } from "../db/client.js";
+import { DB } from "../db/client.js";
 
 export async function getTodosProdutos(req, res) {
-  const produtos = await client.query("SELECT * FROM produtos");
+  const produtos = await DB.query("SELECT * FROM produtos");
 
   res.status(200).json({ produtos: produtos.rows });
 }
@@ -9,7 +9,7 @@ export async function getTodosProdutos(req, res) {
 export async function getProduto(req, res) {
   const { params } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     "SELECT * FROM produtos WHERE codigo_produto = $1",
     [params.codigo_produto]
   );
@@ -20,7 +20,7 @@ export async function getProduto(req, res) {
 export async function createProduto(req, res) {
   const { body } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     `
       INSERT INTO produtos (nome, descricao, preco, imagem)
       VALUES ($1, $2, $3, $4)
@@ -35,7 +35,7 @@ export async function createProduto(req, res) {
 export async function updateProduto(req, res) {
   const { body } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     `
       UPDATE produtos
       SET nome = $2, descricao = $3, preco = $4, imagem = $5
@@ -51,7 +51,7 @@ export async function updateProduto(req, res) {
 export async function deleteProduto(req, res) {
   const { body } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     `
       DELETE FROM produtos
       WHERE codigo_produto = $1

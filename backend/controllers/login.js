@@ -1,9 +1,9 @@
-import { client } from "../db/client.js";
+import { DB } from "../db/client.js";
 
 export const loginController = async (req, res) => {
   const { body } = req;
 
-  const loginQuery = await client.query(
+  const loginQuery = await DB.query(
     "SELECT * FROM login WHERE usuario = $1 AND senha = $2 LIMIT 1",
     [body["usuario"], body["senha"]]
   );
@@ -17,7 +17,7 @@ export const loginController = async (req, res) => {
 
   const login = loginQuery.rows[0];
 
-  const clienteQuery = await client.query(
+  const clienteQuery = await DB.query(
     "SELECT * FROM cliente WHERE codigo_cliente = $1",
     [login.codigo_cliente]
   );

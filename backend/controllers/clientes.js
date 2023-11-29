@@ -1,7 +1,7 @@
-import { client } from "../db/client.js";
+import { DB } from "../db/client.js";
 
 export async function getTodosCliente(req, res) {
-  const produtos = await client.query("SELECT * FROM clientes");
+  const produtos = await DB.query("SELECT * FROM clientes");
 
   res.status(200).json({ produtos: produtos.rows });
 }
@@ -9,7 +9,7 @@ export async function getTodosCliente(req, res) {
 export async function getCliente(req, res) {
   const { params } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     "SELECT * FROM clientes WHERE codigo_cliente = $1",
     [params.codigo_cliente]
   );
@@ -20,7 +20,7 @@ export async function getCliente(req, res) {
 export async function updateCliente(req, res) {
   const { body } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     `
       UPDATE clientes
       SET nome = $2, descricao = $3, preco = $4, imagem = $5
@@ -36,7 +36,7 @@ export async function updateCliente(req, res) {
 export async function deleteCliente(req, res) {
   const { body } = req;
 
-  const produto = await client.query(
+  const produto = await DB.query(
     `
       DELETE FROM clientes
       WHERE codigo_cliente = $1
