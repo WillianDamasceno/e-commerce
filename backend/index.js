@@ -58,7 +58,7 @@ app.get("/produtos", getTodosProdutos);
 app.get("/produto/:codigo_produto", getProduto);
 app.post("/produto", createProduto);
 app.patch("/produto", updateProduto);
-app.delete("/produto", deleteProduto);
+app.delete("/produto/:codigo_produto", deleteProduto);
 
 app.get("/pedido/:id", async (req, res) => {});
 app.post("/pedido/:id", async (req, res) => {});

@@ -1,9 +1,11 @@
 import { DB } from "../db/client.js";
 
 export async function getTodosProdutos(req, res) {
-  const produtos = await DB.query("SELECT * FROM produtos");
+  const produtos = await DB.query(
+    "SELECT * FROM produtos ORDER BY codigo_produto DESC"
+  );
 
-  res.status(200).json({ produtos: produtos.rows });
+  res.status(200).json(produtos.rows);
 }
 
 export async function getProduto(req, res) {
@@ -49,7 +51,7 @@ export async function updateProduto(req, res) {
 }
 
 export async function deleteProduto(req, res) {
-  const { body } = req;
+  const { params } = req;
 
   const produto = await DB.query(
     `
@@ -57,7 +59,7 @@ export async function deleteProduto(req, res) {
       WHERE codigo_produto = $1
       RETURNING *;
     `,
-    [body.codigo_produto]
+    [params.codigo_produto]
   );
 
   res.status(204).json({ produto: produto.rows[0] ?? null });

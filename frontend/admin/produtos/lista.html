@@ -4,15 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        max-width: 800px;
+        margin: auto;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding-block: 1rem;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: 1px solid black;
+        padding: 1rem;
+      }
+
+      div a,
+      div button {
+        border: none;
+        font-size: 1rem;
+        background-color: transparent;
+      }
+
+      button {
+        cursor: pointer;
+        margin-left: auto;
+        color: red;
+      }
+    </style>
   </head>
   <body>
-    <main></main>
+    <h1 class="text-center">Lista dos produtos</h1>
+    <a href="cadastro.html" class="btn btn-primary">Adicionar produto</a>
+
+    <main id="lista"></main>
 
     <script type="module" defer>
       const res = await fetch("http://localhost:3000/produtos");
       const produtos = await res.json();
 
-      console.log(produtos);
+      const lista = document.querySelector("#lista");
+
+      function criarLinhaDaLista(produto) {
+        lista.innerHTML += `
+          <div>
+            <span>${produto.nome}</span>
+            <button data-codigo-produto="${produto.codigo_produto}">Deletar</button>
+            <a href="alterar.html?codigo_produto=${produto.codigo_produto}">Alterar</a>
+          </div>
+        `;
+      }
+
+      produtos.forEach((produto) => criarLinhaDaLista(produto));
+
+      async function deletarRegistro(codugo_produto) {
+        const res = await fetch(
+          `http://localhost:3000/produto/${codugo_produto}`,
+          {
+            method: "delete",
+          }
+        );
+
+        if (res.ok) {
+          location.reload();
+        }
+      }
+
+      const btnExcluir = document.querySelectorAll("button");
+
+      btnExcluir.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const codigo_produto = btn.getAttribute("data-codigo-produto");
+
+          deletarRegistro(codigo_produto);
+        });
+      });
     </script>
   </body>
 </html>
