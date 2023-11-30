@@ -5,9 +5,22 @@ dotenv.config();
 
 import express from "express";
 import cors from "cors";
-import { client } from "./db/client.js";
-import { login as registroController } from "./controllers/registro.js";
+import { DB } from "./db/client.js";
+import { registroController } from "./controllers/registro.js";
 import { loginController } from "./controllers/login.js";
+import {
+  createProduto,
+  deleteProduto,
+  getProduto,
+  getTodosProdutos,
+  updateProduto,
+} from "./controllers/produtos.js";
+import {
+  deleteCliente,
+  getCliente,
+  getTodosCliente,
+  updateCliente,
+} from "./controllers/clientes.js";
 
 // Configuração inicial
 const app = express();
@@ -20,15 +33,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Criar uma conexão com o bando de dados
-await client.connect();
+await DB.connect();
 
 // Rotas
 
-app.get("/", async (request, response, next) => {
-  const { rows } = await client.query("SELECT * FROM login");
+app.get("/", async (req, res, next) => {
+  const { rows } = await DB.query("SELECT * FROM login");
   console.log(rows);
 
-  response.json({
+  res.json({
     message: "E-commerce melhor que a Amazon!",
   });
 });
@@ -36,27 +49,26 @@ app.get("/", async (request, response, next) => {
 app.post("/registro", registroController);
 app.post("/login", loginController);
 
-app.get("/clientes", async () => {});
-app.get("/cliente/:id", async () => {});
-app.post("/cliente/:id", async () => {});
-app.patch("/cliente/:id", async () => {});
-app.delete("/cliente/:id", async () => {});
+app.get("/clientes", getTodosCliente);
+app.get("/cliente/:codigo_cliente", getCliente);
+app.patch("/cliente", updateCliente);
+app.delete("/cliente", deleteCliente);
 
-app.get("/produtos", async () => {});
-app.get("/produto/:id", async () => {});
-app.post("/produto/:id", async () => {});
-app.patch("/produto/:id", async () => {});
-app.delete("/produto/:id", async () => {});
+app.get("/produtos", getTodosProdutos);
+app.get("/produto/:codigo_produto", getProduto);
+app.post("/produto", createProduto);
+app.patch("/produto", updateProduto);
+app.delete("/produto/:codigo_produto", deleteProduto);
 
-app.get("/pedido/:id", async () => {});
-app.post("/pedido/:id", async () => {});
-app.patch("/pedido/:id", async () => {});
-app.delete("/pedido/:id", async () => {});
+app.get("/pedido/:id", async (req, res) => {});
+app.post("/pedido/:id", async (req, res) => {});
+app.patch("/pedido/:id", async (req, res) => {});
+app.delete("/pedido/:id", async (req, res) => {});
 
-app.get("/item-pedido/:id", async () => {});
-app.post("/item-pedido/:id", async () => {});
-app.patch("/item-pedido/:id", async () => {});
-app.delete("/item-pedido/:id", async () => {});
+app.get("/item-pedido/:id", async (req, res) => {});
+app.post("/item-pedido/:id", async (req, res) => {});
+app.patch("/item-pedido/:id", async (req, res) => {});
+app.delete("/item-pedido/:id", async (req, res) => {});
 
 app.listen(process.env.PORT, () => {
   console.log(`App rodando no link http://localhost:${process.env.PORT}`);

@@ -12,35 +12,16 @@
       crossorigin="anonymous"
     />
 
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-      defer
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-      crossorigin="anonymous"
-      defer
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-      crossorigin="anonymous"
-      defer
-    ></script>
-
     <style>
       main {
         margin-top: 130px;
         max-width: 400px;
         padding: 15px;
         border: 1px solid rgb(39, 215, 156);
-        background-color: rgb(37, 221, 160); 
+        background-color: rgb(37, 221, 160);
       }
-      .btn{
-        background-color: rgb(21, 125, 90); 
+      .btn {
+        background-color: rgb(21, 125, 90);
         color: white;
       }
     </style>
@@ -51,27 +32,29 @@
 
       <form class="d-flex flex-column">
         <label for="usuario">Usuário</label>
-        <input type="text" name="usuario" id="usuario" placeholder="Digite o usuario" />
+        <input
+          type="text"
+          name="usuario"
+          id="usuario"
+          placeholder="Digite o usuario"
+        />
         <label for="senha">Senha</label>
-        <input type="text" name="senha" id="senha" placeholder="Digite a senha"/>
+        <input
+          type="text"
+          name="senha"
+          id="senha"
+          placeholder="Digite a senha"
+        />
 
-        <button class="my-3 btn">Login</button>
-        <button class="my-3 btn">Cadastrar</button>
+        <button class="btn my-3">Login</button>
+        <a href="/frontend/registro/index.html" class="btn my-3">Cadastrar</a>
       </form>
 
       <div class="erros alert-danger p-3 fw-bold d-none"></div>
     </main>
 
     <script type="module" defer>
-      try {
-        const cliente = JSON.parse(localStorage.getItem("cliente"));
-
-        if (cliente) {
-          window.location.href = "/frontend/produtos/index.html";
-        }
-      } catch (e) {
-        console.log(e);
-      }
+      redirecionaParaProdutosSeAutenticado();
 
       const form = document.querySelector("form");
 
@@ -90,7 +73,6 @@
             "Content-Type": "application/json",
           },
         });
-        
 
         const json = await res.json();
 
@@ -103,9 +85,11 @@
 
         if (res.ok) {
           localStorage.setItem("cliente", JSON.stringify(json.cliente));
-          window.location.href = "/frontend/produtos/index.html";
+          window.location.href = "/frontend/index.html";
         }
       });
     </script>
+
+    <script src="/frontend/src/js/main.js"></script>
   </body>
 </html>

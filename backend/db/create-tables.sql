@@ -19,6 +19,7 @@ CREATE TABLE login (
 
 CREATE TABLE produtos (
     codigo_produto SERIAL PRIMARY KEY,
+    nome VARCHAR(255),
     descricao VARCHAR(255),
     preco DECIMAL(10, 2),
     imagem TEXT

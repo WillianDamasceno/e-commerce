@@ -4,7 +4,7 @@ dotenv.config();
 import pg from "pg";
 const { Client } = pg;
 
-export const client = new Client({
+export const DB = new Client({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   database: process.env.DB_NAME,
