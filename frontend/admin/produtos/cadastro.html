@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
 
     <link
       rel="stylesheet"
@@ -59,7 +58,7 @@
 
         <input
           id="preco"
-          type="number"
+          type="text"
           name="preco"
           placeholder="Digite o preco do produto"
         />
@@ -97,9 +96,9 @@
           const descricao = form["descricao"].value;
           const imagem = form["imagem"].value;
 
-          console.log({ nome, preco, descricao, imagem });
+          // console.log({ nome, preco, descricao, imagem });
 
-          await fetch("http://localhost:3000/produto", {
+          const res = await fetch("http://localhost:3000/produto", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -111,6 +110,12 @@
               imagem,
             }),
           });
+
+          console.log(res.ok);
+
+          if (res.ok) {
+            location.reload();
+          }
         });
       </script>
     </main>

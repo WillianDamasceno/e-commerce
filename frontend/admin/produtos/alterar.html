@@ -55,7 +55,7 @@
 
         <input
           id="preco"
-          type="number"
+          type="text"
           name="preco"
           placeholder="Digite o preco do produto"
         />
@@ -114,7 +114,7 @@
 
         console.log({ nome, preco, descricao, imagem });
 
-        await fetch("http://localhost:3000/produto", {
+        const res = await fetch("http://localhost:3000/produto", {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -127,6 +127,10 @@
             imagem,
           }),
         });
+
+        if (res.ok) {
+          location.reload();
+        }
       });
     </script>
   </body>
