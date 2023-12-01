@@ -4,6 +4,130 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+      }
+      main {
+        max-width: 400px;
+        margin: auto;
+        margin-top: 130px;
+        padding: 15px;
+        border: 1px solid rgb(39, 215, 156);
+
+        background-color: rgb(37, 221, 160);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .btn {
+        background-color: rgb(21, 125, 90);
+        color: white;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <main>
+      <form class="d-flex flex-column" id="form">
+        <label for="nome">Nome do produto:</label>
+
+        <input
+          id="nome"
+          type="text"
+          placeholder="Digite o nome do produto"
+          name="nome"
+        />
+
+        <label for="preco">Preco R$:</label>
+
+        <input
+          id="preco"
+          type="number"
+          name="preco"
+          placeholder="Digite o preco do produto"
+        />
+
+        <label for="descricao">Descriçao:</label>
+
+        <textarea
+          id="descricao"
+          name="descricao"
+          rows="5"
+          placeholder="Digite o descrição do produto"
+        ></textarea>
+
+        <label for="imagem">Adicionar imagem:</label>
+
+        <input
+          id="imagem"
+          name="imagem"
+          type="text"
+          placeholder="Digite a url da imagem"
+        />
+
+        <button type="submit" class="btn mt-3">Alterar</button>
+        <a href="lista.html" class="btn mt-3">Ir para a lista</a>
+      </form>
+    </main>
+
+    <script type="module" defer>
+      const form = document.querySelector("#form");
+
+      const searchParams = new URLSearchParams(window.location.search);
+      const codigo_produto = Number(searchParams.get("codigo_produto"));
+
+      const res = await fetch(
+        `http://localhost:3000/produto/${codigo_produto}`
+      );
+      const produto = await res.json();
+
+      const nome = produto["nome"];
+      const descricao = produto["descricao"];
+      const preco = produto["preco"];
+      const imagem = produto["imagem"];
+
+      form.nome.value = nome;
+      form.descricao.value = descricao;
+      form.preco.value = preco;
+      form.imagem.value = imagem;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nome = form.nome.value;
+        const preco = Number(form.preco.value);
+        const descricao = form.descricao.value;
+        const imagem = form.imagem.value;
+
+        console.log({ nome, preco, descricao, imagem });
+
+        await fetch("http://localhost:3000/produto", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            codigo_produto,
+            nome,
+            preco,
+            descricao,
+            imagem,
+          }),
+        });
+      });
+    </script>
+  </body>
 </html>

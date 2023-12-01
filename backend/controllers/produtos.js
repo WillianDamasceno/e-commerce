@@ -16,7 +16,7 @@ export async function getProduto(req, res) {
     [params.codigo_produto]
   );
 
-  res.status(200).json({ produto: produto.rows[0] ?? null });
+  res.status(200).json(produto.rows[0] ?? null);
 }
 
 export async function createProduto(req, res) {
