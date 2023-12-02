@@ -10,9 +10,21 @@ function redirecionaParaProdutosSeAutenticado() {
   }
 }
 
+function redirecionaParaLoginSeNaoAutenticado() {
+  try {
+    const cliente = JSON.parse(localStorage.getItem("cliente"));
+    
+    if (!cliente?.codigo_cliente && !cliente.admin) {
+      window.location.href = "/frontend/login.html";
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function logout() {
   localStorage.removeItem("cliente");
-  location.href = "/frontend/login/index.html";
+  location.href = "/frontend/login.html";
 }
 
 const logoutBtn = document.querySelector(".logout");

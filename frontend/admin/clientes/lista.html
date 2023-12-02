@@ -17,6 +17,8 @@
     <main id="lista" class="admin-lista"></main>
 
     <script type="module" defer>
+      redirecionaParaLoginSeNaoAutenticado();
+
       const res = await fetch("http://localhost:3000/produtos");
       const produtos = await res.json();
 
