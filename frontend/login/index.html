@@ -84,6 +84,11 @@
         }
 
         if (res.ok) {
+          if (json.admin) {
+            localStorage.setItem("cliente", JSON.stringify({ admin: true }));
+            return window.location.href = "/frontend/admin/index.html";
+          }
+          
           localStorage.setItem("cliente", JSON.stringify(json.cliente));
           window.location.href = "/frontend/index.html";
         }

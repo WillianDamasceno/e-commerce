@@ -10,9 +10,10 @@ function redirecionaParaProdutosSeAutenticado() {
   }
 }
 
-const logoutBtn = document.querySelector(".logout");
-
-logoutBtn?.addEventListener("click", () => {
+function logout() {
   localStorage.removeItem("cliente");
   location.href = "/frontend/login/index.html";
-});
+}
+
+const logoutBtn = document.querySelector(".logout");
+logoutBtn?.addEventListener("click", logout);
