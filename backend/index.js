@@ -24,7 +24,9 @@ import {
 import {
   createItemController,
   deleteItemController,
+  finalizarPedidoController,
   getItemDoClienteController,
+  updateItemQuantidadeController,
 } from "./controllers/item-pedido.js";
 
 // Configuração inicial
@@ -44,7 +46,6 @@ await DB.connect();
 
 app.get("/", async (req, res, next) => {
   const { rows } = await DB.query("SELECT * FROM login");
-  console.log(rows);
 
   res.json({
     message: "E-commerce melhor que a Amazon!",
@@ -65,15 +66,12 @@ app.post("/produto", createProduto);
 app.patch("/produto", updateProduto);
 app.delete("/produto/:codigo_produto", deleteProduto);
 
-// app.get("/pedido/:codigo_cliente", getPedido);
-// app.post("/pedido", createPedido);
-// app.patch("/pedido", updatePedido);
-// app.delete("/pedido/:codigo_cliente", deletePedido);
-
 app.get("/item-pedido/:codigo_cliente", getItemDoClienteController);
 app.post("/item-pedido", createItemController);
-// app.patch("/item-pedido/:id", );
+app.put("/item-pedido-quantidade", updateItemQuantidadeController);
 app.delete("/item-pedido", deleteItemController);
+
+app.post("/finalizar-pedido", finalizarPedidoController);
 
 app.listen(process.env.PORT, () => {
   console.log(`App rodando no link http://localhost:${process.env.PORT}`);

@@ -62,3 +62,36 @@ async function removerDoCarrinho(codigo_produto) {
 
   return res;
 }
+
+async function mudarQuantidade(codigo_produto, sequencial, quantidade) {
+  const cliente = JSON.parse(localStorage.getItem("cliente"));
+  const codigo_cliente = cliente.codigo_cliente;
+
+  const res = await fetch("http://localhost:3000/item-pedido-quantidade", {
+    method: "put",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      codigo_produto,
+      codigo_cliente,
+      sequencial,
+      quantidade,
+    }),
+  });
+
+  return res;
+}
+
+async function getProdutos() {
+  let produtos = [];
+  if (estaAutenticado()) {
+    const cliente = JSON.parse(localStorage.getItem("cliente"));
+    const resItemPedido = await fetch(
+      `http://localhost:3000/item-pedido/${cliente.codigo_cliente}`
+    );
+    produtos = await resItemPedido.json();
+  }
+
+  return produtos;
+}

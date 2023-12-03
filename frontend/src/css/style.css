@@ -95,7 +95,8 @@ header #btnPesquisar {
   width: 180px;
   max-height: 180px;
 }
-.pagina-produtos .botao {
+.pagina-produtos .botao,
+.pagina-carrinho .botao {
   margin: 5px;
   color: white;
   background-color: rgb(21, 125, 90);
@@ -104,8 +105,55 @@ header #btnPesquisar {
   padding: 5px;
   cursor: pointer;
 }
-.pagina-produtos .botao:hover {
+.pagina-produtos .botao:hover,
+.pagina-carrinho .botao:hover {
   background-color: aqua;
+}
+
+.carrinho-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-block: 1rem;
+}
+.carrinho-lista .item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid black;
+  padding: 1rem;
+}
+.carrinho-lista div a,
+.carrinho-lista div button {
+  border: none;
+  font-size: 1rem;
+  background-color: transparent;
+}
+.carrinho-lista .btn-deletar {
+  cursor: pointer;
+  color: red;
+}
+
+.carrinho-lista .carrinho-quantidade {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+}
+.carrinho-lista .carrinho-quantidade button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border-radius: 9999px;
+
+  cursor: pointer;
+}
+
+.carrinho-lista .carrinho-quantidade button:hover {
+  background-color: lightgray;
 }
 
 .pagina-produtos .produto-selecionado {
@@ -123,20 +171,20 @@ header #btnPesquisar {
   gap: 1rem;
   padding-block: 1rem;
 }
-.admin div {
+.admin-lista div {
   display: flex;
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid black;
   padding: 1rem;
 }
-.admin div a,
-.admin div button {
+.admin-lista div a,
+.admin-lista div button {
   border: none;
   font-size: 1rem;
   background-color: transparent;
 }
-.admin .btn-deletar {
+.admin-lista .btn-deletar {
   cursor: pointer;
   margin-left: auto;
   color: red;

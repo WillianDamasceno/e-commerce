@@ -17,7 +17,6 @@ export async function getTodosPedidos(req, res) {
 
 export async function getItemDoClienteController(req, res) {
   const { params } = req;
-  console.log(params.codigo_cliente);
 
   const itensPedidos = await getTodosItemPedidoDoCliente(params.codigo_cliente);
 
@@ -45,17 +44,28 @@ export async function createItemController(req, res) {
   res.status(201).json(itemPedido ?? null);
 }
 
-export async function updateItemController(req, res) {
+export async function updateItemQuantidadeController(req, res) {
   const { body } = req;
+
+  const produto = await getProduto(body.codigo_produto);
 
   const pedido = await DB.query(
     `
-      UPDATE pedidos
-      SET quantidade = $2, total = $3
-      WHERE codigo_cliente = $1
-      RETURNING *;
+      UPDATE item_pedido
+      SET quantidade = $1, total_item = $2
+      WHERE codigo_pedido IN (
+        SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $3
+      ) AND codigo_produto = $4
+        AND sequencial = $5
+        RETURNING *;
     `,
-    [body.codigo_cliente, body.quantidade, body.total]
+    [
+      body.quantidade,
+      produto.preco * body.quantidade,
+      body.codigo_cliente,
+      body.codigo_produto,
+      body.sequencial,
+    ]
   );
 
   res.status(200).json(pedido.rows[0] ?? null);
@@ -69,10 +79,31 @@ export async function deleteItemController(req, res) {
       DELETE FROM item_pedido
       WHERE codigo_pedido IN (
           SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $1
-      ) AND codigo_produto = $2;
+      ) AND codigo_produto = $2
+        RETURNING *;
     `,
     [body.codigo_cliente, body.codigo_produto]
   );
 
   res.status(204).json(pedido.rows[0] ?? null);
+}
+
+export async function finalizarPedidoController(req, res) {
+  const { body } = req;
+
+  const itemPedidoDeletado = await DB.query(
+    `
+      DELETE FROM item_pedido WHERE codigo_pedido IN (
+        SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $1
+      );
+    `,
+    [body.codigo_cliente]
+  );
+
+  const pedidoDeletado = await DB.query(
+    "DELETE FROM pedidos WHERE codigo_cliente = $1;",
+    [body.codigo_cliente]
+  );
+
+  res.status(204).json(pedidoDeletado.rows[0] ?? null);
 }

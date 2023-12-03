@@ -71,7 +71,8 @@ export async function getTodosItemPedidoDoCliente(codigo_cliente) {
       JOIN
         produtos p ON ip.codigo_produto = p.codigo_produto
       WHERE
-        pe.codigo_cliente = $1;
+        pe.codigo_cliente = $1
+      ORDER BY ip.sequencial
     `,
     [codigo_cliente]
   );
