@@ -96,7 +96,7 @@ header #btnPesquisar {
   max-height: 180px;
 }
 .pagina-produtos .botao {
-  margin-left: 5px;
+  margin: 5px;
   color: white;
   background-color: rgb(21, 125, 90);
   border-radius: 5px 5px;
@@ -107,9 +107,8 @@ header #btnPesquisar {
 .pagina-produtos .botao:hover {
   background-color: aqua;
 }
-.pagina-produtos .carrinho {
-  margin: 5px;
-}
+
+
 
 .admin {
   max-width: 800px;

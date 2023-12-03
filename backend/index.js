@@ -11,7 +11,7 @@ import { loginController } from "./controllers/login.js";
 import {
   createProduto,
   deleteProduto,
-  getProduto,
+  getProdutoController,
   getTodosProdutos,
   updateProduto,
 } from "./controllers/produtos.js";
@@ -21,6 +21,7 @@ import {
   getTodosCliente,
   updateCliente,
 } from "./controllers/clientes.js";
+import { createItemController } from "./controllers/item-pedido.js";
 
 // Configuração inicial
 const app = express();
@@ -55,20 +56,20 @@ app.patch("/cliente", updateCliente);
 app.delete("/cliente", deleteCliente);
 
 app.get("/produtos", getTodosProdutos);
-app.get("/produto/:codigo_produto", getProduto);
+app.get("/produto/:codigo_produto", getProdutoController);
 app.post("/produto", createProduto);
 app.patch("/produto", updateProduto);
 app.delete("/produto/:codigo_produto", deleteProduto);
 
-app.get("/pedido/:id", async (req, res) => {});
-app.post("/pedido/:id", async (req, res) => {});
-app.patch("/pedido/:id", async (req, res) => {});
-app.delete("/pedido/:id", async (req, res) => {});
+// app.get("/pedido/:codigo_cliente", getPedido);
+// app.post("/pedido", createPedido);
+// app.patch("/pedido", updatePedido);
+// app.delete("/pedido/:codigo_cliente", deletePedido);
 
-app.get("/item-pedido/:id", async (req, res) => {});
-app.post("/item-pedido/:id", async (req, res) => {});
-app.patch("/item-pedido/:id", async (req, res) => {});
-app.delete("/item-pedido/:id", async (req, res) => {});
+// app.get("/item-pedido/:id", );
+app.post("/item-pedido", createItemController);
+// app.patch("/item-pedido/:id", );
+// app.delete("/item-pedido/:id", );
 
 app.listen(process.env.PORT, () => {
   console.log(`App rodando no link http://localhost:${process.env.PORT}`);

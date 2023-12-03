@@ -8,7 +8,7 @@ export async function getTodosProdutos(req, res) {
   res.status(200).json(produtos.rows);
 }
 
-export async function getProduto(req, res) {
+export async function getProdutoController(req, res) {
   const { params } = req;
 
   const produto = await DB.query(

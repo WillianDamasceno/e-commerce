@@ -69,25 +69,25 @@
       const res = await fetch("http://localhost:3000/produtos");
       const produtos = await res.json();
 
-      produtos.forEach((elemento) => {
+      produtos.forEach((produto) => {
         const divProduto = document.createElement("div");
         divProduto.className = "produtos";
 
         const h2Nome = document.createElement("h2");
         h2Nome.className = "produt";
-        h2Nome.textContent = elemento.nome;
+        h2Nome.textContent = produto.nome;
 
         const pValor = document.createElement("p");
         pValor.className = "valor";
-        pValor.textContent = elemento.preco;
+        pValor.textContent = produto.preco;
 
         const pDesc = document.createElement("p");
         pDesc.className = "desc";
-        pDesc.textContent = elemento.descricao;
+        pDesc.textContent = produto.descricao;
 
         const imgProduto = document.createElement("img");
         imgProduto.className = "img";
-        imgProduto.src = elemento.imagem;
+        imgProduto.src = produto.imagem;
 
         const btnComprar = document.createElement("button");
         btnComprar.className = "botao carrinho";
@@ -95,7 +95,8 @@
 
         const btnCarrinho = document.createElement("button");
         btnCarrinho.className = "botao carrinho";
-        btnCarrinho.textContent = "Adicionar o Carrinho";
+        btnCarrinho.textContent = "Adicionar ao Carrinho";
+        btnCarrinho.setAttribute("data-codigo-produto", produto.codigo_produto);
 
         divProduto.appendChild(h2Nome);
         divProduto.appendChild(pValor);
@@ -105,6 +106,26 @@
         divProduto.appendChild(btnCarrinho);
 
         produtosContainer.appendChild(divProduto);
+      });
+
+      const todosBtnCarrinho = document.querySelectorAll(
+        "[data-codigo-produto]"
+      );
+
+      todosBtnCarrinho.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          if (redirecionaParaLoginSeNaoAutenticado()) {
+            return;
+          }
+
+          const codigo_produto = btn.getAttribute("data-codigo-produto");
+          const res = await adicionarAoCarrinho(codigo_produto);
+
+          if (res.ok) {
+            btn.classList.add("carrinho");
+            btn.textContent = "Remover do carrinho";
+          }
+        });
       });
     </script>
   </body>
