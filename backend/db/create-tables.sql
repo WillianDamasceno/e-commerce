@@ -34,7 +34,7 @@ CREATE TABLE pedidos (
 
 CREATE TABLE item_pedido (
     codigo_pedido INT,
-    sequencial INT,
+    sequencial SERIAL,
     codigo_produto INT,
     quantidade INT,
     total_item DECIMAL(10, 2),
