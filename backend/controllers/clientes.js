@@ -1,12 +1,12 @@
 import { DB } from "../db/client.js";
 
-export async function getTodosCliente(req, res) {
+export async function getTodosClienteController(req, res) {
   const produtos = await DB.query("SELECT * FROM clientes");
 
   res.status(200).json({ produtos: produtos.rows });
 }
 
-export async function getCliente(req, res) {
+export async function getClienteController(req, res) {
   const { params } = req;
 
   const produto = await DB.query(
@@ -17,7 +17,7 @@ export async function getCliente(req, res) {
   res.status(200).json({ produto: produto.rows[0] ?? null });
 }
 
-export async function updateCliente(req, res) {
+export async function updateClienteController(req, res) {
   const { body } = req;
 
   const produto = await DB.query(
@@ -33,7 +33,7 @@ export async function updateCliente(req, res) {
   res.status(200).json({ produto: produto.rows[0] ?? null });
 }
 
-export async function deleteCliente(req, res) {
+export async function deleteClienteController(req, res) {
   const { body } = req;
 
   const produto = await DB.query(

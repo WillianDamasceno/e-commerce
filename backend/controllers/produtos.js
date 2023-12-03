@@ -1,6 +1,6 @@
 import { DB } from "../db/client.js";
 
-export async function getTodosProdutos(req, res) {
+export async function getTodosProdutosController(req, res) {
   const produtos = await DB.query(
     "SELECT * FROM produtos ORDER BY codigo_produto DESC"
   );
@@ -19,7 +19,7 @@ export async function getProdutoController(req, res) {
   res.status(200).json(produto.rows[0] ?? null);
 }
 
-export async function createProduto(req, res) {
+export async function createProdutoController(req, res) {
   const { body } = req;
 
   const produto = await DB.query(
@@ -34,7 +34,7 @@ export async function createProduto(req, res) {
   res.status(201).json({ produto: produto.rows[0] ?? null });
 }
 
-export async function updateProduto(req, res) {
+export async function updateProdutoController(req, res) {
   const { body } = req;
 
   const produto = await DB.query(
@@ -50,7 +50,7 @@ export async function updateProduto(req, res) {
   res.status(200).json({ produto: produto.rows[0] ?? null });
 }
 
-export async function deleteProduto(req, res) {
+export async function deleteProdutoController(req, res) {
   const { params } = req;
 
   const produto = await DB.query(

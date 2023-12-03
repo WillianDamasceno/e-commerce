@@ -9,17 +9,17 @@ import { DB } from "./db/client.js";
 import { registroController } from "./controllers/registro.js";
 import { loginController } from "./controllers/login.js";
 import {
-  createProduto,
-  deleteProduto,
+  createProdutoController,
+  deleteProdutoController,
   getProdutoController,
-  getTodosProdutos,
-  updateProduto,
+  getTodosProdutosController,
+  updateProdutoController,
 } from "./controllers/produtos.js";
 import {
-  deleteCliente,
-  getCliente,
-  getTodosCliente,
-  updateCliente,
+  deleteClienteController,
+  getClienteController,
+  getTodosClienteController,
+  updateClienteController,
 } from "./controllers/clientes.js";
 import {
   createItemController,
@@ -55,16 +55,16 @@ app.get("/", async (req, res, next) => {
 app.post("/registro", registroController);
 app.post("/login", loginController);
 
-app.get("/clientes", getTodosCliente);
-app.get("/cliente/:codigo_cliente", getCliente);
-app.patch("/cliente", updateCliente);
-app.delete("/cliente", deleteCliente);
+app.get("/clientes", getTodosClienteController);
+app.get("/cliente/:codigo_cliente", getClienteController);
+app.patch("/cliente", updateClienteController);
+app.delete("/cliente", deleteClienteController);
 
-app.get("/produtos", getTodosProdutos);
+app.get("/produtos", getTodosProdutosController);
 app.get("/produto/:codigo_produto", getProdutoController);
-app.post("/produto", createProduto);
-app.patch("/produto", updateProduto);
-app.delete("/produto/:codigo_produto", deleteProduto);
+app.post("/produto", createProdutoController);
+app.patch("/produto", updateProdutoController);
+app.delete("/produto/:codigo_produto", deleteProdutoController);
 
 app.get("/item-pedido/:codigo_cliente", getItemDoClienteController);
 app.post("/item-pedido", createItemController);
