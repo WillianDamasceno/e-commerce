@@ -40,6 +40,7 @@
       const form = document.querySelector("form");
 
       form.addEventListener("submit", async (e) => {
+        // Envia os dados do formulário para a api
         e.preventDefault();
 
         const campos = {};
@@ -57,6 +58,10 @@
 
         const json = await res.json();
 
+        // Mostra um erro caso algum ocorra
+        // Um exemplo de erro é quando um usuário não existente
+        // é usado para fazer login
+        // Outro exemplo é quando o usuário está correto mas a senha não
         if (res.status !== 200) {
           const errosDiv = document.querySelector(".erros");
 
@@ -66,10 +71,14 @@
 
         if (res.ok) {
           if (json.admin) {
+            // Se for um usuário admin, o tipo de usuário é guardado no local storage
+            // e em seguida é redirecionado para a página de admin
             localStorage.setItem("cliente", JSON.stringify({ admin: true }));
             return (window.location.href = "admin/index.html");
           }
 
+          // Caso seja um usuário normal, seus dados são guardados no local storage
+          // e em seguida é redirecionado para a página dos produtos
           localStorage.setItem("cliente", JSON.stringify(json.cliente));
           window.location.href = "index.html";
         }
