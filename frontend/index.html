@@ -103,6 +103,14 @@
         btnComprar.className = "botao";
         btnComprar.textContent = "Comprar";
 
+        btnComprar.addEventListener("click", async () => {
+          if (!idsDosProdutosPedidos.includes(produto.codigo_produto)) {
+            const res = await adicionarAoCarrinho(produto.codigo_produto);
+          }
+
+          location.href = "carrinho.html";
+        });
+
         const btnCarrinho = document.createElement("button");
         btnCarrinho.classList.add("botao");
         btnCarrinho.setAttribute("data-codigo-produto", produto.codigo_produto);
