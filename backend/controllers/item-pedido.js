@@ -1,6 +1,7 @@
 import {
   DB,
   createPedido,
+  deleteTodosItemPedidoDoCliente,
   getPedido,
   getProduto,
   getTodosItemPedidoDoCliente,
@@ -91,19 +92,7 @@ export async function deleteItemController(req, res) {
 export async function finalizarPedidoController(req, res) {
   const { body } = req;
 
-  const itemPedidoDeletado = await DB.query(
-    `
-      DELETE FROM item_pedido WHERE codigo_pedido IN (
-        SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $1
-      );
-    `,
-    [body.codigo_cliente]
-  );
-
-  const pedidoDeletado = await DB.query(
-    "DELETE FROM pedidos WHERE codigo_cliente = $1;",
-    [body.codigo_cliente]
-  );
+  deleteTodosItemPedidoDoCliente(body.codigo_cliente);
 
   res.status(204).json(pedidoDeletado.rows[0] ?? null);
 }

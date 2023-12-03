@@ -1,4 +1,8 @@
-import { DB } from "../db/client.js";
+import {
+  DB,
+  deleteProduto,
+  deleteTodosItemPedidoDoProduto,
+} from "../db/client.js";
 
 export async function getTodosProdutosController(req, res) {
   const produtos = await DB.query(
@@ -53,14 +57,9 @@ export async function updateProdutoController(req, res) {
 export async function deleteProdutoController(req, res) {
   const { params } = req;
 
-  const produto = await DB.query(
-    `
-      DELETE FROM produtos
-      WHERE codigo_produto = $1
-      RETURNING *;
-    `,
-    [params.codigo_produto]
-  );
+  await deleteTodosItemPedidoDoProduto(params.codigo_produto);
 
-  res.status(204).json({ produto: produto.rows[0] ?? null });
+  const produto = deleteProduto(params.codigo_produto);
+
+  res.status(204).json(produto);
 }

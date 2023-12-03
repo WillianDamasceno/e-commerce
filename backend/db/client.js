@@ -28,17 +28,17 @@ export async function getProduto(codigo_produto) {
   return produto.rows[0] ?? null;
 }
 
-export async function createPedido(codigo_cliente, total = 0) {
-  const pedido = await DB.query(
+export async function deleteProduto(codigo_produto) {
+  const produto = await DB.query(
     `
-      INSERT INTO pedidos (codigo_cliente, total)
-      VALUES ($1, $2)
+      DELETE FROM produtos
+      WHERE codigo_produto = $1
       RETURNING *;
     `,
-    [codigo_cliente, total]
+    [codigo_produto]
   );
 
-  return pedido.rows[0];
+  return produto.rows[0] ?? null;
 }
 
 // Pedidos
@@ -55,6 +55,19 @@ export async function getPedido(codigo_cliente) {
   );
 
   return pedido.rows[0] ?? null;
+}
+
+export async function createPedido(codigo_cliente, total = 0) {
+  const pedido = await DB.query(
+    `
+      INSERT INTO pedidos (codigo_cliente, total)
+      VALUES ($1, $2)
+      RETURNING *;
+    `,
+    [codigo_cliente, total]
+  );
+
+  return pedido.rows[0];
 }
 
 export async function getTodosItemPedidoDoCliente(codigo_cliente) {
@@ -96,4 +109,26 @@ export async function insertItemPedido(
   );
 
   return itemPedido.rows[0] ?? [];
+}
+
+export async function deleteTodosItemPedidoDoCliente(codigo_cliente) {
+  const itemPedidoDeletado = await DB.query(
+    `
+      DELETE FROM item_pedido WHERE codigo_pedido IN (
+        SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $1
+      );
+    `,
+    [codigo_cliente]
+  );
+
+  return itemPedidoDeletado;
+}
+
+export async function deleteTodosItemPedidoDoProduto(codigo_produto) {
+  const itemPedidoDeletado = await DB.query(
+    "DELETE FROM item_pedido WHERE codigo_produto = $1;",
+    [codigo_produto]
+  );
+
+  return itemPedidoDeletado;
 }
