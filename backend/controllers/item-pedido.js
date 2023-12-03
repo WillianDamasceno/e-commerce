@@ -17,6 +17,7 @@ export async function getTodosPedidos(req, res) {
 
 export async function getItemDoClienteController(req, res) {
   const { params } = req;
+  console.log(params.codigo_cliente);
 
   const itensPedidos = await getTodosItemPedidoDoCliente(params.codigo_cliente);
 
@@ -61,15 +62,16 @@ export async function updateItemController(req, res) {
 }
 
 export async function deleteItemController(req, res) {
-  const { params } = req;
+  const { body } = req;
 
   const pedido = await DB.query(
     `
-      DELETE FROM pedidos
-      WHERE codigo_pedido = $1
-      RETURNING *;
+      DELETE FROM item_pedido
+      WHERE codigo_pedido IN (
+          SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $1
+      ) AND codigo_produto = $2;
     `,
-    [params.codigo_pedido]
+    [body.codigo_cliente, body.codigo_produto]
   );
 
   res.status(204).json(pedido.rows[0] ?? null);

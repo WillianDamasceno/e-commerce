@@ -66,8 +66,18 @@
     <script type="module" defer>
       const produtosContainer = document.getElementById("prod");
 
-      const res = await fetch("http://localhost:3000/produtos");
-      const produtos = await res.json();
+      const resProdutos = await fetch("http://localhost:3000/produtos");
+      const produtos = await resProdutos.json();
+
+      let idsDosProdutosPedidos = [];
+      if (estaAutenticado()) {
+        const cliente = JSON.parse(localStorage.getItem("cliente"));
+        const resItemPedido = await fetch(
+          `http://localhost:3000/item-pedido/${cliente.codigo_cliente}`
+        );
+        const itens = await resItemPedido.json();
+        idsDosProdutosPedidos = itens.map((item) => item.codigo_produto);
+      }
 
       produtos.forEach((produto) => {
         const divProduto = document.createElement("div");
@@ -90,13 +100,20 @@
         imgProduto.src = produto.imagem;
 
         const btnComprar = document.createElement("button");
-        btnComprar.className = "botao carrinho";
+        btnComprar.className = "botao";
         btnComprar.textContent = "Comprar";
 
         const btnCarrinho = document.createElement("button");
-        btnCarrinho.className = "botao carrinho";
-        btnCarrinho.textContent = "Adicionar ao Carrinho";
+        btnCarrinho.classList.add("botao");
         btnCarrinho.setAttribute("data-codigo-produto", produto.codigo_produto);
+
+        if (idsDosProdutosPedidos.includes(produto.codigo_produto)) {
+          btnCarrinho.classList.add("produto-selecionado");
+          btnCarrinho.textContent = "Remover do carrinho";
+          btnCarrinho.setAttribute("data-selecionado", "");
+        } else {
+          btnCarrinho.textContent = "Adicionar ao Carrinho";
+        }
 
         divProduto.appendChild(h2Nome);
         divProduto.appendChild(pValor);
@@ -119,11 +136,23 @@
           }
 
           const codigo_produto = btn.getAttribute("data-codigo-produto");
-          const res = await adicionarAoCarrinho(codigo_produto);
 
-          if (res.ok) {
-            btn.classList.add("carrinho");
-            btn.textContent = "Remover do carrinho";
+          if (btn.hasAttribute("data-selecionado")) {
+            const res = await removerDoCarrinho(codigo_produto);
+
+            if (res.ok) {
+              btn.classList.remove("produto-selecionado");
+              btn.textContent = "Adicionar ao carrinho";
+              btn.removeAttribute("data-selecionado");
+            }
+          } else {
+            const res = await adicionarAoCarrinho(codigo_produto);
+
+            if (res.ok) {
+              btn.classList.add("produto-selecionado");
+              btn.textContent = "Remover do carrinho";
+              btn.setAttribute("data-selecionado", "");
+            }
           }
         });
       });

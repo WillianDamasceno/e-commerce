@@ -108,7 +108,9 @@ header #btnPesquisar {
   background-color: aqua;
 }
 
-
+.pagina-produtos .produto-selecionado {
+  background-color: rgb(224, 51, 51);
+}
 
 .admin {
   max-width: 800px;

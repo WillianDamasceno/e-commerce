@@ -21,7 +21,11 @@ import {
   getTodosCliente,
   updateCliente,
 } from "./controllers/clientes.js";
-import { createItemController } from "./controllers/item-pedido.js";
+import {
+  createItemController,
+  deleteItemController,
+  getItemDoClienteController,
+} from "./controllers/item-pedido.js";
 
 // Configuração inicial
 const app = express();
@@ -66,10 +70,10 @@ app.delete("/produto/:codigo_produto", deleteProduto);
 // app.patch("/pedido", updatePedido);
 // app.delete("/pedido/:codigo_cliente", deletePedido);
 
-// app.get("/item-pedido/:id", );
+app.get("/item-pedido/:codigo_cliente", getItemDoClienteController);
 app.post("/item-pedido", createItemController);
 // app.patch("/item-pedido/:id", );
-// app.delete("/item-pedido/:id", );
+app.delete("/item-pedido", deleteItemController);
 
 app.listen(process.env.PORT, () => {
   console.log(`App rodando no link http://localhost:${process.env.PORT}`);

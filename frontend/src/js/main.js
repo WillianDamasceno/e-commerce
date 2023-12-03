@@ -49,12 +49,15 @@ async function adicionarAoCarrinho(codigo_produto) {
 }
 
 async function removerDoCarrinho(codigo_produto) {
-  const res = await fetch("http://localhost:3000/carrinho/remover-produto", {
+  const cliente = JSON.parse(localStorage.getItem("cliente"));
+  const codigo_cliente = cliente.codigo_cliente;
+
+  const res = await fetch("http://localhost:3000/item-pedido", {
     method: "delete",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ codigo_produto }),
+    body: JSON.stringify({ codigo_produto, codigo_cliente }),
   });
 
   return res;
