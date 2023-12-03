@@ -83,7 +83,7 @@ async function mudarQuantidade(codigo_produto, sequencial, quantidade) {
   return res;
 }
 
-async function getProdutos() {
+async function getProdutosDoCarrinho() {
   let produtos = [];
   if (estaAutenticado()) {
     const cliente = JSON.parse(localStorage.getItem("cliente"));

@@ -70,12 +70,8 @@
     <script type="module" defer>
       redirecionaParaLoginSeNaoAutenticado();
 
-      const produtos = await getProdutos();
-
-      const lista = document.querySelector("#lista");
-
       async function calcularTotal() {
-        const produtos = await getProdutos();
+        const produtos = await getProdutosDoCarrinho();
         const total = produtos.reduce(
           (prev, produto) => Number(produto.total_item) + prev,
           0
@@ -86,9 +82,12 @@
         span.textContent = total.toFixed(2);
       }
 
+      // Calcula o total de cada produto e mostra o valor na tela
       calcularTotal();
 
       function criarLinhaDaLista(produto) {
+        const lista = document.querySelector("#lista");
+
         lista.innerHTML += `
           <div class="item">
             <span data-total>R$${produto.total_item}</span>
@@ -113,27 +112,9 @@
         `;
       }
 
+      // Lista todos os produtos que o cliente adicionou no carrinho
+      const produtos = await getProdutosDoCarrinho();
       produtos.forEach((produto) => criarLinhaDaLista(produto));
-
-      const todosBtnDiminuir = document.querySelectorAll(
-        ".carrinho-quantidade [data-diminuir]"
-      );
-
-      const todosBtnAumentar = document.querySelectorAll(
-        ".carrinho-quantidade [data-aumentar]"
-      );
-
-      function mostrarOuEsconderBtnDiminuir() {
-        todosBtnDiminuir.forEach((btn) => {
-          const span = btn.nextElementSibling;
-
-          if (Number(span.textContent) > 1) {
-            btn.removeAttribute("hidden");
-          } else {
-            btn.setAttribute("hidden", "");
-          }
-        });
-      }
 
       async function mudarQuantidadeOnCLick(
         btn,
@@ -167,6 +148,14 @@
         return res;
       }
 
+      const todosBtnDiminuir = document.querySelectorAll(
+        ".carrinho-quantidade [data-diminuir]"
+      );
+      const todosBtnAumentar = document.querySelectorAll(
+        ".carrinho-quantidade [data-aumentar]"
+      );
+
+      // Adiciona funcionalidade de diminuir a quantidade de um produto
       todosBtnDiminuir.forEach((btn) => {
         const span = btn.nextElementSibling;
 
@@ -178,8 +167,7 @@
         });
       });
 
-      mostrarOuEsconderBtnDiminuir();
-
+      // Adiciona funcionalidade de aumentar a quantidade de um produto
       todosBtnAumentar.forEach((btn) => {
         btn.addEventListener("click", async () => {
           const span = btn.previousElementSibling;
@@ -193,6 +181,22 @@
         "[data-remover-do-carrinho]"
       );
 
+      function mostrarOuEsconderBtnDiminuir() {
+        todosBtnDiminuir.forEach((btn) => {
+          const span = btn.nextElementSibling;
+
+          if (Number(span.textContent) > 1) {
+            btn.removeAttribute("hidden");
+          } else {
+            btn.setAttribute("hidden", "");
+          }
+        });
+      }
+
+      // Esconde os botões de diminuir a quantidade de um produto se a quantidade for 1
+      mostrarOuEsconderBtnDiminuir();
+
+      // Adiciona a funcionalidade de remover um item do carrinho
       todosBtnRemover.forEach((btn) => {
         btn.addEventListener("click", async () => {
           if (redirecionaParaLoginSeNaoAutenticado()) {
@@ -212,6 +216,7 @@
 
       const btnFinalizar = document.querySelector("[data-finalizar-compra]");
 
+      // Adiciona a funcionalidade finalizar o pedido
       btnFinalizar.addEventListener("click", async () => {
         const cliente = JSON.parse(localStorage.getItem("cliente"));
         const codigo_cliente = cliente.codigo_cliente;
