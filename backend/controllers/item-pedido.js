@@ -94,5 +94,5 @@ export async function finalizarPedidoController(req, res) {
 
   deleteTodosItemPedidoDoCliente(body.codigo_cliente);
 
-  res.status(204).json(pedidoDeletado.rows[0] ?? null);
+  res.status(204).json(null);
 }
