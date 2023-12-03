@@ -45,8 +45,6 @@ await DB.connect();
 // Rotas
 
 app.get("/", async (req, res, next) => {
-  const { rows } = await DB.query("SELECT * FROM login");
-
   res.json({
     message: "E-commerce melhor que a Amazon!",
   });
@@ -67,9 +65,9 @@ app.patch("/produto", updateProdutoController);
 app.delete("/produto/:codigo_produto", deleteProdutoController);
 
 app.get("/item-pedido/:codigo_cliente", getItemDoClienteController);
-app.post("/item-pedido", createItemController);
+app.post("/adiciona-item-carrinho", createItemController);
 app.put("/item-pedido-quantidade", updateItemQuantidadeController);
-app.delete("/item-pedido", deleteItemController);
+app.delete("/remove-item-carrinho", deleteItemController);
 
 app.post("/finalizar-pedido", finalizarPedidoController);
 

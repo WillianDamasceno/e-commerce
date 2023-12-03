@@ -1,8 +1,4 @@
-import {
-  DB,
-  deleteProduto,
-  deleteTodosItemPedidoDoProduto,
-} from "../db/client.js";
+import { DB } from "../db/client.js";
 
 export async function getTodosProdutosController(req, res) {
   const produtos = await DB.query(
@@ -57,9 +53,20 @@ export async function updateProdutoController(req, res) {
 export async function deleteProdutoController(req, res) {
   const { params } = req;
 
-  await deleteTodosItemPedidoDoProduto(params.codigo_produto);
+  // Deleta os todos os itens de pedido de um certo produto
+  await DB.query("DELETE FROM item_pedido WHERE codigo_produto = $1;", [
+    params.codigo_produto,
+  ]);
 
-  const produto = deleteProduto(params.codigo_produto);
+  // Deleta o produto em si
+  const produto = await DB.query(
+    `
+      DELETE FROM produtos
+      WHERE codigo_produto = $1
+      RETURNING *;
+    `,
+    [params.codigo_produto]
+  );
 
-  res.status(204).json(produto);
+  res.status(204).json(produto.rows[0] ?? null);
 }

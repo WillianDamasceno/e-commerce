@@ -19,6 +19,7 @@ export const loginController = async (req, res) => {
     [body["usuario"], body["senha"]]
   );
 
+  // Retorna um erro se os dados de login não existirem
   if (!loginQuery.rowCount) {
     return res.status(401).json({
       mensagem:
@@ -32,6 +33,10 @@ export const loginController = async (req, res) => {
     "SELECT * FROM cliente WHERE codigo_cliente = $1",
     [login.codigo_cliente]
   );
+
+  // Se os dados existem, é retornado os dados do cliente
+  // Isso é necessário pois o frontend precisa do id do cliente
+  // para buscar os pedidos e adicionar um item no carrinho
 
   return res.status(200).json({
     cliente: clienteQuery.rows[0],

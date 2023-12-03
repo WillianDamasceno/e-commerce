@@ -1,7 +1,6 @@
 import {
   DB,
   createPedido,
-  deleteTodosItemPedidoDoCliente,
   getPedido,
   getProduto,
   getTodosItemPedidoDoCliente,
@@ -17,6 +16,7 @@ export async function getTodosPedidos(req, res) {
 }
 
 export async function getItemDoClienteController(req, res) {
+  // Pega todos os itens do pedido de um cliente
   const { params } = req;
 
   const itensPedidos = await getTodosItemPedidoDoCliente(params.codigo_cliente);
@@ -25,6 +25,7 @@ export async function getItemDoClienteController(req, res) {
 }
 
 export async function createItemController(req, res) {
+  // Adiciona um item do carrinho
   const { body } = req;
 
   let pedido = await getPedido(body.codigo_cliente);
@@ -50,6 +51,7 @@ export async function updateItemQuantidadeController(req, res) {
 
   const produto = await getProduto(body.codigo_produto);
 
+  // Altera a quantidade d um item no carrinho
   const pedido = await DB.query(
     `
       UPDATE item_pedido
@@ -75,6 +77,7 @@ export async function updateItemQuantidadeController(req, res) {
 export async function deleteItemController(req, res) {
   const { body } = req;
 
+  // Remove um item do carrinho
   const pedido = await DB.query(
     `
       DELETE FROM item_pedido
@@ -92,7 +95,15 @@ export async function deleteItemController(req, res) {
 export async function finalizarPedidoController(req, res) {
   const { body } = req;
 
-  deleteTodosItemPedidoDoCliente(body.codigo_cliente);
+  // Para finalizar o pedido todos os itens do carrinho são deletados
+  await DB.query(
+    `
+      DELETE FROM item_pedido WHERE codigo_pedido IN (
+        SELECT codigo_pedido FROM pedidos WHERE codigo_cliente = $1
+      );
+    `,
+    [body.codigo_cliente]
+  );
 
   res.status(204).json(null);
 }

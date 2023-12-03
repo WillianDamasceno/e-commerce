@@ -8,6 +8,7 @@ export const registroController = async (req, res) => {
     [body["usuario"]]
   );
 
+  // Retorna um erro se os dados para registro já existirem
   if (usuarioQuery.rowCount) {
     return res.status(409).json({
       mensagem: "Usuário já existente, escolha outro nome de usuário.",
@@ -34,11 +35,12 @@ export const registroController = async (req, res) => {
 
   await DB.query(
     `
-        INSERT INTO login (usuario, senha, codigo_cliente)
-        VALUES ($1, $2, $3)
-      `,
+      INSERT INTO login (usuario, senha, codigo_cliente)
+      VALUES ($1, $2, $3)
+    `,
     [body["usuario"], body["senha"], cliente.rows[0].codigo_cliente]
   );
 
+  // Retorna os dados do cliente, mesmo motivo explicado no controller de login
   return res.status(200).json({ cliente: cliente.rows[0] });
 };

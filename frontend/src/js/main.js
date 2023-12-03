@@ -37,7 +37,7 @@ async function adicionarAoCarrinho(codigo_produto) {
   const cliente = JSON.parse(localStorage.getItem("cliente"));
   const codigo_cliente = cliente.codigo_cliente;
 
-  const res = await fetch("http://localhost:3000/item-pedido", {
+  const res = await fetch("http://localhost:3000/adiciona-item-carrinho", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -52,7 +52,7 @@ async function removerDoCarrinho(codigo_produto) {
   const cliente = JSON.parse(localStorage.getItem("cliente"));
   const codigo_cliente = cliente.codigo_cliente;
 
-  const res = await fetch("http://localhost:3000/item-pedido", {
+  const res = await fetch("http://localhost:3000/remove-item-carrinho", {
     method: "delete",
     headers: {
       "Content-Type": "application/json",
