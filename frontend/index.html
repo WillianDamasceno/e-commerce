@@ -66,9 +66,20 @@
     <script type="module" defer>
       const produtosContainer = document.getElementById("prod");
 
+      // Busca todos os produtos
       const resProdutos = await fetch("http://localhost:3000/produtos");
       const produtos = await resProdutos.json();
 
+      // Se o cliente está logado, uma lista com os ids dos produtos
+      // atualmente presentes no carrinho será criada
+      //
+      // Isso serve para verificar se um produto já está no
+      // carrinho ou não, e possibilitar a funcionalidade
+      // dos botões que adicionam e removem os produtos
+      // do carrinho
+      //
+      // Para saber se o produto está ou não no carrinho,
+      // basta verificar se o id está presente na lista
       let idsDosProdutosPedidos = [];
       if (estaAutenticado()) {
         const cliente = JSON.parse(localStorage.getItem("cliente"));
@@ -79,6 +90,7 @@
         idsDosProdutosPedidos = itens.map((item) => item.codigo_produto);
       }
 
+      // Adiciona um card para cada produto
       produtos.forEach((produto) => {
         const divProduto = document.createElement("div");
         divProduto.className = "produtos";
@@ -104,6 +116,10 @@
         btnComprar.textContent = "Comprar";
 
         btnComprar.addEventListener("click", async () => {
+          // Ao clicar em comprar, é verificado se o item já está no carrinho
+          // Caso não esteja, ele é adicionado ao carrinho e logo em seguida
+          // o usuário é redirecionado para a página do carrinho
+
           if (!idsDosProdutosPedidos.includes(produto.codigo_produto)) {
             const res = await adicionarAoCarrinho(produto.codigo_produto);
           }
@@ -115,6 +131,8 @@
         btnCarrinho.classList.add("botao");
         btnCarrinho.setAttribute("data-codigo-produto", produto.codigo_produto);
 
+        // Define a aparência do botão do adicionar ou remover do carrinho
+        // verificando se o produto já está no carrinho ou não
         if (idsDosProdutosPedidos.includes(produto.codigo_produto)) {
           btnCarrinho.classList.add("produto-selecionado");
           btnCarrinho.textContent = "Remover do carrinho";
@@ -137,6 +155,7 @@
         "[data-codigo-produto]"
       );
 
+      // Adiciona a funcionalidade de adicionar e remover itens do carrinho
       todosBtnCarrinho.forEach((btn) => {
         btn.addEventListener("click", async () => {
           if (redirecionaParaLoginSeNaoAutenticado()) {
