@@ -106,6 +106,7 @@
       const form = document.querySelector("form");
 
       form.addEventListener("submit", async (e) => {
+        // Envia os dados do formulário para a api
         e.preventDefault();
 
         const campos = {};
@@ -131,6 +132,8 @@
 
         const json = await res.json();
 
+        // Mostra um erro caso algum ocorra
+        // Um exemplo de erro é quando um usuário já existente é fornecida para ser cadastrado
         if (res.status !== 200) {
           const errosDiv = document.querySelector(".erros");
 
@@ -139,6 +142,8 @@
         }
 
         if (res.ok) {
+          // Se o registro funcionar, os dados do cliente são guardados no local storage
+          // e em seguida ele é redirecionado para a página de produtos
           localStorage.setItem("cliente", JSON.stringify(json.cliente));
           window.location.href = "index.html";
         }
