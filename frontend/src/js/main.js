@@ -1,7 +1,7 @@
 function estaAutenticado() {
   try {
     const cliente = JSON.parse(localStorage.getItem("cliente"));
-    return Boolean(cliente?.codigo_cliente);
+    return Boolean(cliente?.codigo_cliente || cliente?.admin);
   } catch (e) {
     console.log(e);
   }
