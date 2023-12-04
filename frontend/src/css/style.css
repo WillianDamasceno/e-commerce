@@ -5,6 +5,7 @@
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
+  
 }
 .pagina-form form {
   display: flex;
@@ -161,21 +162,31 @@ header #btnPesquisar {
 }
 
 .admin {
+  
   max-width: 800px;
   margin: auto;
   padding: 1rem;
+  border: 1px solid black;
+  
+}
+
+.admin-produtos{
+  margin-top: 100px;
 }
 .admin-lista {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding-block: 1rem;
+  
+  
 }
 .admin-lista div {
   display: flex;
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid black;
+  background-color: aqua;
   padding: 1rem;
 }
 .admin-lista div a,
@@ -188,4 +199,27 @@ header #btnPesquisar {
   cursor: pointer;
   margin-left: auto;
   color: red;
+}
+.container{
+  margin-top: 100px;
+  width: 350px;
+  height: 300px;
+  padding-top: 100px;
+  border: 1px solid rgb(39, 215, 156);
+  background-color: rgb(37, 221, 160);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.botao{
+  margin: 5px;
+  color: white;
+  background-color: rgb(21, 125, 90);
+  border-radius: 5px 5px;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
 }
