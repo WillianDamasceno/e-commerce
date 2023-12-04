@@ -34,7 +34,7 @@ export const loginController = async (req, res) => {
     [login.codigo_cliente]
   );
 
-  // Se os dados existem, é retornado os dados do cliente
+  // Se os dados de login existem, é retornado os dados do cliente
   // Isso é necessário pois o frontend precisa do id do cliente
   // para buscar os pedidos e adicionar um item no carrinho
 
